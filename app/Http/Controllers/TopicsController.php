@@ -77,4 +77,5 @@ class TopicsController extends Controller {
         }
         return $data;
     }
+
 }
