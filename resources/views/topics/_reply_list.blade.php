@@ -15,7 +15,7 @@
                     <span> •  </span>
                     <span class="meta" title="{{ $reply->created_at }}">{{ $reply->created_at->diffForHumans() }}</span>
 
-                    @can('destroy', $reply)
+                    @can('destroy', [ $reply, $topic ])
                         <span class="meta pull-right">
                             <form action="{{ route('replies.destroy', $reply->id) }}" method="post">
                                 {{ csrf_field() }}
