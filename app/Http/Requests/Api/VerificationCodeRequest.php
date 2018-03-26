@@ -24,4 +24,5 @@ class VerificationCodeRequest extends FormRequest {
 			'phone' => 'required|regex:/^1[34578]\d{9}$/|unique:users',
 		];
 	}
+
 }
