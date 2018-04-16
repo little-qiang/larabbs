@@ -30,3 +30,8 @@ Route::resource('replies', 'RepliesController', ['only' => ['store', 'destroy']]
 Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
 
 Route::get('permission-denied', 'PagesController@permissionDenied')->name('permission-denied');
+
+Route::get('/test', function(){
+    echo json_encode(['code' => 200, 'data' => 'xx']);
+    exit;
+});

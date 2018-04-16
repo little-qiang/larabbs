@@ -30,4 +30,11 @@ class UsersController extends Controller {
 
 		return $this->response->created();
 	}
+
+	public function index(){
+		$result = [
+			'success'
+		];
+		return $this->response->array($result)->setStatusCode(201);
+	}
 }
