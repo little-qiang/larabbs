@@ -5,10 +5,23 @@ namespace App\Http\Controllers\api;
 use App\Http\Requests\Api\ReplyRequest;
 use App\Models\Reply;
 use App\Models\Topic;
+use App\Models\User;
 use App\Transformers\ReplyTransformer;
 
 class RepliesController extends Controller
 {
+
+    public function index(Topic $topic)
+    {
+        $replies = $topic->replies()->paginate(20);
+        return $this->response->paginator($replies, new ReplyTransformer);
+    }
+
+    public function userIndex(User $user)
+    {
+        $replies = $user->replies()->paginate(20);
+        return $this->response->paginator($replies, new ReplyTransformer);
+    }
 
     public function store(ReplyRequest $request, Topic $topic, Reply $reply)
     {
@@ -21,7 +34,8 @@ class RepliesController extends Controller
             ->setStatusCode(201);
     }
 
-    public function destroy(Topic $topic, Reply $reply){
+    public function destroy(Topic $topic, Reply $reply)
+    {
         $this->authorize('destroy', $topic, $reply);
 
         $reply->delete();
