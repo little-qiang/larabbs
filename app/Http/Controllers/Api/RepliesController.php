@@ -20,4 +20,11 @@ class RepliesController extends Controller
         return $this->response->item($reply, new ReplyTransformer())
             ->setStatusCode(201);
     }
+
+    public function destroy(Topic $topic, Reply $reply){
+        $this->authorize('destroy', $topic, $reply);
+
+        $reply->delete();
+        return $this->response->noContent();
+    }
 }

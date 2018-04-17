@@ -67,6 +67,10 @@ class TopicsController extends Controller
 
     public function destroy(Topic $topic)
     {
+        if ($reply->topic_id != $topic->id) {
+            return $this->response->errorBadRequest();
+        }
+
         $this->authorize('update', $topic);
 
         $topic->delete();
