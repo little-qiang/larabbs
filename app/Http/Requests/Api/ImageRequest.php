@@ -2,14 +2,8 @@
 
 namespace App\Http\Requests\Api;
 
-use Dingo\Api\Http\FormRequest;
-
 class ImageRequest extends FormRequest
 {
-    public function authorize()
-    {
-        return true;
-    }
 
     public function rules()
     {
@@ -27,10 +21,10 @@ class ImageRequest extends FormRequest
         return $rules;
     }
 
-      public function messages()
-      {
-          return [
-              'image.dimensions' => '图片的清晰度不够，宽和高需要 200px 以上',
-          ];
-      }
+    public function messages()
+    {
+        return [
+            'image.dimensions' => '图片的清晰度不够，宽和高需要 200px 以上',
+        ];
+    }
 }
