@@ -30,7 +30,7 @@ class TopicsController extends Controller
                 break;
         }
 
-        $topics = $query->paginate(20);
+        $topics = $query->paginate(10);
 
         return $this->response->paginator($topics, new TopicTransformer());
     }
@@ -38,7 +38,7 @@ class TopicsController extends Controller
     public function userIndex(User $user, Request $request)
     {
         $topics = $user->topics()->recent()
-            ->paginate(20);
+            ->paginate(10);
 
         return $this->response->paginator($topics, new TopicTransformer());
     }

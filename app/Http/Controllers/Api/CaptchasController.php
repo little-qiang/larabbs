@@ -8,9 +8,11 @@ use Gregwar\Captcha\CaptchaBuilder;
 class CaptchasController extends Controller {
 
 	public function store(CaptchaRequest $request, CaptchaBuilder $captchaBuilder) {
-		$key = 'captcha-' . str_random(15);
+		$key = 'captcha-123';
+		// $key = 'captcha-' . str_random(15);
 		$phone = $request->phone;
 
+		$captchaBuilder->setPhrase('abcde');
 		$captcha = $captchaBuilder->build();
 		$expiredAt = now()->addMinutes(2);
 		\Cache::put($key, ['phone' => $phone, 'code' => $captcha->getPhrase()], $expiredAt);
