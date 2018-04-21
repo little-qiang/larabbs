@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use Auth;
-use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Requests\Api\AuthorizationRequest;
 use App\Http\Requests\Api\SocialAuthorizationRequest;
+use App\Models\User;
+use Auth;
 
 class AuthorizationsController extends Controller
 {
@@ -15,8 +14,8 @@ class AuthorizationsController extends Controller
         $username = $request->username;
 
         filter_var($username, FILTER_VALIDATE_EMAIL) ?
-            $credentials['email'] = $username :
-            $credentials['phone'] = $username;
+        $credentials['email'] = $username :
+        $credentials['phone'] = $username;
 
         $credentials['password'] = $request->password;
 
@@ -24,7 +23,8 @@ class AuthorizationsController extends Controller
             return $this->response->errorUnauthorized(trans('auth.failed'));
         }
 
-        return $this->respondWithToken($token)->setStatusCode(201);
+        return $this->respondWithToken($token)
+            ->setStatusCode(201);
     }
 
     public function socialStore($type, SocialAuthorizationRequest $request)
@@ -53,20 +53,20 @@ class AuthorizationsController extends Controller
         }
 
         switch ($type) {
-        case 'weixin':
-            $user = User::where('weixin_unionid', $oauthUser->offsetGet('unionid'))->first();
+            case 'weixin':
+                $user = User::where('weixin_unionid', $oauthUser->offsetGet('unionid'))->first();
 
-            // 没有用户，默认创建一个用户
-            if (!$user) {
-                $user = User::create([
-                    'name' => $oauthUser->getNickname(),
-                    'avatar' => $oauthUser->getAvatar(),
-                    'weixin_openid' => $oauthUser->getId(),
-                    'weixin_unionid' => $oauthUser->offsetGet('unionid'),
-                ]);
-            }
+                // 没有用户，默认创建一个用户
+                if (!$user) {
+                    $user = User::create([
+                        'name' => $oauthUser->getNickname(),
+                        'avatar' => $oauthUser->getAvatar(),
+                        'weixin_openid' => $oauthUser->getId(),
+                        'weixin_unionid' => $oauthUser->offsetGet('unionid'),
+                    ]);
+                }
 
-            break;
+                break;
         }
 
         $token = Auth::guard('api')->fromUser($user);
@@ -90,7 +90,8 @@ class AuthorizationsController extends Controller
         return $this->response->array([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
+            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60,
+            'user_info' => Auth::guard('api')->user(),
         ]);
     }
 }
