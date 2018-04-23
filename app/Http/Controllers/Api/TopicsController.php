@@ -38,7 +38,7 @@ class TopicsController extends Controller
     public function userIndex(User $user, Request $request)
     {
         $topics = $user->topics()->recent()
-            ->paginate(10);
+            ->paginate(5);
 
         return $this->response->paginator($topics, new TopicTransformer());
     }
