@@ -1,5 +1,8 @@
 <?php
 
+// header("Access-Control-Allow-Headers:*");
+// header("Access-Control-Allow-Methods:*");
+// header("Access-Control-Allow-Origin:*");
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
